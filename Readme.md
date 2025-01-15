@@ -41,5 +41,70 @@ Static Constructor nesne üretilirken sadece ve sadece bir kere tetiklenir.
 * Ctor private tanımlananacağı için Unit-Testlerde sorun olabilmektedir.
 * İlgili sınıf kalıtım operasyonlarında kullanılamaz.
 
-</body>
-</html>
+<br>
+<h4>Kullanım</h4>
+Öncelikle sınıfımızın nesne üretilebilirliği kaldırılır. bunun için constructor'u private tanımlarız.
+
+```csharp
+class SingletonClass
+{
+    private SingletonClass(){}
+}
+```
+<br>
+
+Daha sonra global olarak tanımlanacak ve geri dönüş tipi SingletonClass olacak field tanımlarız.
+
+```csharp
+class SingletonClass
+{
+    private SingletonClass(){}
+
+    static SingletonClass _instance;
+}
+```
+<br>
+
+
+
+**1.Yöntem Kontrol Ederek**
+Static bir member(property veya method) tanımlayarak instance'ın null kontrolü yapılarak yoksa instance üretip field'a atanır varsa aynı instance return edilir.
+
+```csharp
+class SingletonClass
+{
+    private SingletonClass(){}
+
+    static SingletonClass _instance;
+
+    public static SingletonClass GetInstance()
+    {
+        if(_instance == null)
+            _instance = new SingletonClass();
+        return _instance;
+    }
+}
+```
+
+**2.Yöntem Kontrol Etmeden Static Ctor İle Oluşturarak**
+Static bir member(property veya method) tanımlayarak instance'ın null kontrolü yapılmadan static constructor'da üretilen nesne garantisi sağlanır ve static member'da return edilir.
+Static Constructor herhangi bir static bir member'ın tetiklenmesiyle de tetiklenedebilir.
+
+```csharp
+class SingletonClass
+{
+    private SingletonClass(){}
+
+    static SingletonClass _instance;
+
+    static SingletonClass()
+    {
+        _instance = new SingletonClass();
+    }
+
+    public static SingletonClass GetInstance()
+    {
+        return _instance;
+    }
+}
+```
