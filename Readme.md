@@ -108,3 +108,11 @@ class SingletonClass
     }
 }
 ```
+
+<br>
+
+<p>Asenkron süreçte birden fazla instance oluşturulabiliyor. Asenkron yapılar aynı T zamanında nesne üretimi bloğunda olabilir. 
+Çözüm olarak Static Constructor da nesne üretimini sağlayarız. Static Consturctor sadece bir kez tetikleneceği için bu sorunu ortadan kaldırır.</p>
+
+<br>
+
