@@ -6,7 +6,7 @@ Nesnelerin sürekli üretilmesi bir maliyettir. Nesnelerin üretimini optimize e
 Creational Design Pattern'lar arasında birbirini tamamlayan yaklaşımlar vardır.
 <br>
 
-<h4>Singleton Design Pattern</h4>
+<h3>Singleton Design Pattern</h3>
 
 * Bir sınıfın sadece tek bir nesnesinin kullanılması davranışıdır.
 Bazı verilerin sadece tek bir nesne'de tutulması/saklanması gerekebilmektedir.
@@ -114,5 +114,24 @@ class SingletonClass
 <p>Asenkron süreçte birden fazla instance oluşturulabiliyor. Asenkron yapılar aynı T zamanında nesne üretimi bloğunda olabilir. 
 Çözüm olarak Static Constructor da nesne üretimini sağlayarız. Static Consturctor sadece bir kez tetikleneceği için bu sorunu ortadan kaldırır.</p>
 
-<br>
+<br><br>
 
+<h3>Multiton Design Pattern</h3>
+Uygulama bazında bir sınıfın sadece belirli sayıda instance'ının olacağını sağlar.
+Bir collection(Dictionary) olarak key value formatında tutar.
+Her key için tek bir instance üretilecektir. Yani Singleton davranışıda devam etmektedir.
+<br>
+Mail Service Örneği ile Kullanım;
+
+```csharp
+class MailService
+{
+    private MailService(){}
+    static Dictionary<string, MailService> _ms = new();
+    public static MailService GetInstance(string key){
+        if(!_ms.ContainsKey(key))
+            _ms[key] = new MailService();
+        return _ms[key];
+    }
+}
+```
