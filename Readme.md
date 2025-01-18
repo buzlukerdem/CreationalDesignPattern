@@ -155,10 +155,120 @@ class MailService
 **1-Factory Yöntemi**
 * Ortak arayüz uygulanan sınıflarda, new operatörüyle üretim gerçekleştirilir.
 * Alt factory sınıfı barındırmaz.
+
+**Örnek Kullanım;**
+
+Grup nesnelerini soyutlayacak sınıfımız.
+```csharp
+interface IA 
+{
+    /*
+    ...
+    */
+    void Run();
+}
+```
+
 <br>
+
+Implement edilmiş grup nesneleri
+```csharp
+class A1 : IA
+{
+    public void Run()
+    {
+        Console.WriteLine($"{nameof(A1)} Running...");
+    }
+}
+class A2 : IA
+{
+    public void Run()
+    {
+        Console.WriteLine($"{nameof(A2)} Running...");
+    }
+}
+```
+
+<br>
+
+Creator Sınıfı(Nesneyi üretecek yardımcı sınıf)
+Class türleri enum olarak parametreden alınmakta.
+```csharp
+class ACreator
+{
+    public static IA GetInstance(AType aType )
+    {
+        IA _ia = null;
+        switch (aType)
+        {
+            case AType.A1:
+               _ia = new A1();
+                break;
+            case AType.A2:
+                _ia = new A2();
+                break;
+        }
+        return _ia;
+    }
+}
+```
+
+<br>
+
+
 
 **2-Factory Method yöntemi**
 * Ortak arayüz uygulanan sınıflarda, alt factory oluşturulmuş sınıflar nesne üretimini üstlenir.
 * Yardımcı sınıf nesnenin factory kısmıyla ilgilenirken, factory sınıflar üretim sorumluluğunu üstlenir.
 * Belirli nesne grubunun üretilmesinin sorumluluğunu üstlenir.
 
+<br>
+
+**Factory Method ile kullanım;**
+Grup nesnelerin kendine özel factory sınıfları oluşturulur ve nesne üretimini factory sınıflar üstlenir.
+
+```csharp
+interface IAFactory
+{
+    // create func imza
+    IA Create();
+}
+
+//Factory Classes
+class A1Factory : IAFactory
+{
+    public IA Create()
+    {
+        A1 a1 = new A1();
+        return a1;
+
+    }
+}
+class A2Factory : IAFactory
+{
+    public IA Create()
+    {
+        A2 a2 = new A2();
+        return a2;
+    }
+}
+```
+
+<br>
+Creator yardımcı sınıfı artık nesne üretimini üstlenmez. Parametreden alınacak türe göre Factory sınıflarından nesne üreterek o nesne üzerinden talep edilen nesne üretilir.
+
+```csharp
+class ACreator
+{
+    public static IA GetInstance(AType aType)
+    {
+        IAFactory _aFactory = aType switch
+        {
+            AType.A1 => new A1Factory(),
+            AType.A2 => new A2Factory(),
+            AType.A3 => new A3Factory()
+        };
+        return _aFactory.Create();
+    }
+}
+```
