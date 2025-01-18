@@ -135,3 +135,30 @@ class MailService
     }
 }
 ```
+<br><br>
+
+<h3>Factory Method Desing Pattern</h3>
+
+* Nesne üretim süreçlerinde nesne'nin türüne odaklanmadan nesnelerin üretilmesini sağlar.
+* Nesne üretimi sorumluluğu yardımcı bir sınıfta sağlanır.
+* Nesne üretimi standart hale getirilebilir.
+* Belirli nesne gruplarının üretimi ayrı ayrı gerçekleştirmek yerine merkezi bir sınıf üzerinden sağlanır.
+* Kod inşa sürecinde nesneyi üretip kullanırken consturctor parametreleri, tetiklenmesi gereken metot veya propertyler üretim maliyetine odaklanmaya sebep olur. 
+* Factory Method Design Pattern nesnelerin standart bir şekilde oluşturulmasını sağlar.
+* Nesneleri Singleton olarakta tasarlayabiliriz.
+* Sıkı bağımlılıktan kaçınmayı sağlar.
+* Mevcut nesneleri kullanmak yerine, yeni nesneleri standart bir şekilde oluşturulmasını sağlar.
+* Ortak bir arayüzden üretilecekleri için ortak işlevsellik barındırırlar.
+
+<br>
+
+**1-Factory Yöntemi**
+* Ortak arayüz uygulanan sınıflarda, new operatörüyle üretim gerçekleştirilir.
+* Alt factory sınıfı barındırmaz.
+<br>
+
+**2-Factory Method yöntemi**
+* Ortak arayüz uygulanan sınıflarda, alt factory oluşturulmuş sınıflar nesne üretimini üstlenir.
+* Yardımcı sınıf nesnenin factory kısmıyla ilgilenirken, factory sınıflar üretim sorumluluğunu üstlenir.
+* Belirli nesne grubunun üretilmesinin sorumluluğunu üstlenir.
+
