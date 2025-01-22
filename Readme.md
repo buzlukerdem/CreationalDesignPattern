@@ -257,6 +257,8 @@ class A2Factory : IAFactory
 <br>
 Creator yardımcı sınıfı artık nesne üretimini üstlenmez. Parametreden alınacak türe göre Factory sınıflarından nesne üreterek o nesne üzerinden talep edilen nesne üretilir.
 
+Ek olarak **single responsibility prensibi** de sağlanmış olmaktadır.
+
 ```csharp
 class ACreator
 {
@@ -272,3 +274,18 @@ class ACreator
     }
 }
 ```
+
+<br><br>
+
+<h3>Abstract Factory Method Desing Pattern</h3>
+
+Abstract Factory Method, bir nesnenin kendi aralarında birden fazla  ilişkisel alt nesne grubu ile bir araya gelmesi durumlarında, bu alt nesnelerin soyutlanarak kullanılması yaklaşımıdır.
+Bu alt nesne gruplarının nesne üretimleri yardımcı sınıflara(factory) verilir.
+Bütünsel nesneyi üretebilmek için bu nesnelerin teker teker üretilmesine gerek kalmadan tek seferde üretebilmeyi sağlar.
+Daha sonradan alt sınıf nesnesi kolayca eklenebilir.(Open Close Principle)
+Nesnelerin üretim sorumluluğu ve üretim maliyeti Factory sınıflara verilmiş olur.
+Her bir factory sınıfının kendi arayüzü oluşturulur.
+Sıkı bağımlılıktan kaçınmayı sağlar.
+Factory Method Design Pattern'a göre daha karmaşık bir yapıya sahiptir.
+**Örnek olarak**; Bilgisayar Kasası
+Aralarında ilişkisel alt sınıflar: Anakart - İşlemci - Ram - Ekran Kartı gibi.
