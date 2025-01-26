@@ -289,3 +289,142 @@ Sıkı bağımlılıktan kaçınmayı sağlar.
 Factory Method Design Pattern'a göre daha karmaşık bir yapıya sahiptir.
 **Örnek olarak**; Bilgisayar Kasası
 Aralarında ilişkisel alt sınıflar: Anakart - İşlemci - Ram - Ekran Kartı gibi.
+<br>
+EkranKartı-İşlemci-Ram products'ları ile örnek.
+Abstract Products;
+
+```csharp
+interface ICPU
+{
+    string CPUName { get; set; }
+    string CPUCore { get; set; }
+    string CPUThread { get; set; }
+}
+
+interface IVideoCard
+{
+    string VideoCardName { get; set; }
+    string VideoCardMemory { get; set; }
+    string VideoCardBit { get; set; }
+}
+
+interface IRAM
+{
+    string RAMName { get; set; }
+    string RAMMemory { get; set; }
+    string RAMMhz { get; set; }
+}
+```
+<br>
+
+Concrete Products Abstract Products'ları ile implement edildi;
+```csharp
+class CPU : ICPU
+{
+    public string CPUName { get; set; }
+    public string CPUCore { get; set; }
+    public string CPUThread { get; set; }
+}
+
+class VideoCard : IVideoCard
+{
+    public string VideoCardName { get; set; }
+    public string VideoCardMemory { get; set; }
+    public string VideoCardBit { get; set; }
+}
+
+class RAM : IRAM
+{
+    public string RAMName { get; set; }
+    public string RAMMemory { get; set; }
+    public string RAMMhz { get; set; }
+}
+```
+<br>
+
+Abstract Factory, alt sınıf nesnelerin üretimini gerçekleştirecek arayüz.
+
+```csharp
+interface IComputerFactory
+{
+    ICPU CreateCPU();
+    IVideoCard CreateVideoCard();
+    IRAM CreateRAM();
+}
+```
+
+<br>
+Talep edilecek nesne class'ı;
+
+```csharp
+class Computer
+{
+    public Computer(ICPU _cpu, IVideoCard _videoCard, IRAM _ram)
+    {
+        CPU = _cpu;
+        VideoCard = _videoCard;
+        RAM = _ram;
+    }
+    public ICPU CPU { get; set; }
+    public IVideoCard VideoCard { get; set; }
+    public IRAM RAM { get; set; }
+}
+```
+<br>
+Computer nesnesini üretecek Creator class'ı;
+
+```csharp
+class ComputerCreator
+{
+    ICPU _cpu;
+    IRAM _ram;
+    IVideoCard _videoCard;
+
+    public Computer CreateComputer(IComputerFactory computerFactory)
+    {
+        _cpu = computerFactory.CreateCPU();
+        _ram = computerFactory.CreateRAM();
+        _videoCard = computerFactory.CreateVideoCard();
+
+        return new(_cpu, _ram, _videoCard);
+    }
+}
+```
+<br>
+
+
+Abstract Factory i implement edecek olan Concrete Factory nesne/class'ı;
+```csharp
+class Computer1 : IComputerFactory
+{
+    public Computer1()
+    {
+        Console.WriteLine($"{nameof(Computer1)} created.");
+    }
+    public ICPU CreateCPU()
+    {
+        CPU cPU = new CPU();
+        cPU.CPUName = "i5-12400F";
+        cPU.CPUCore = "6";
+        cPU.CPUThread = "12";
+        return cPU;
+    }
+    public IRAM CreateRAM()
+    {
+        RAM rAM = new RAM();
+        rAM.RAMName = "GSKILL Ripjavs V Siyah";
+        rAM.RAMMemory = "16GB";
+        rAM.RAMMhz = "3200MHz";
+        return rAM;
+    }
+
+    public IVideoCard CreateVideoCard()
+    {
+        VideoCard videoCard = new VideoCard();
+        videoCard.VideoCardName = "MSI GeForce RTX 4060 VENTUS 2X BLACK";
+        videoCard.VideoCardMemory = "8GB";
+        videoCard.VideoCardBit = "128 Bit";
+        return videoCard;
+    }
+}
+```
