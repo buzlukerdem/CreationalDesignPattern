@@ -428,3 +428,78 @@ class Computer1 : IComputerFactory
     }
 }
 ```
+
+<br><br>
+
+<h3>Prototype Desing Pattern</h3>
+
+Üretim sırasında gereğinden fazla maliyetli olan ve zaman alan nesneleri üretmek yerine daha önceden maliyeti ödenmiş nesneyi klonlamayı esas alan bir stratejidir.
+Sürekli new operatörü ile nesne üretimi tekrar tekrar maliyete sebep olmaktadır.
+Tabii ki klonlanacak nesne değersel açıdan aralarındaki fark büyük değilse klonlanmalıdır.
+Bu davranış referans türlü yapılarda **DEEPCOPY** olarak gerçekleştirilir.
+Klonlamak yeni bir nesne oluşturmak anlamınza gelmez.
+
+<br>
+
+1.Yöntem;
+Concrete class'a, içerisinde clone metotu barındıran bir Abstract(soyut) sınıftan implement edilir.
+<br>
+
+Örnek;
+
+```csharp
+interface IMyClonable
+{
+    MyClass Clone();
+}
+class MyClass : IMyClonable
+{
+    public MyClass(...parameters...)
+    {
+        Property = param1,
+        Property2 = param2,
+        /*
+            ...
+        */
+    }
+    public string? Property { get; set; }
+    public string? Property2 { get; set; }
+    ///...
+
+    public MyClass Clone()
+    {
+        //Object içerisinde gelen MemberwiseClone metotu
+       return (MyClass)base.MemberwiseClone();
+    }
+}
+```
+
+2.Yöntem;
+Concrete class'a, Clone metodunu barındıran IClonable interface'i implement edilir.
+Bu interface .NET System namespace'inde hazır olarak gelmektedir.
+
+Örnek;
+
+```csharp
+class MyClass : IClonable
+{
+    public MyClass(...parameters...)
+    {
+        Property = param1,
+        Property2 = param2,
+        /*
+            ...
+        */
+    }
+    public string? Property { get; set; }
+    public string? Property2 { get; set; }
+    ///...
+
+  object ICloneable.Clone()
+  {
+      return (MyClass)base.MemberwiseClone();
+  }
+}
+```
+<br>
+
