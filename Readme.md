@@ -524,4 +524,52 @@ Süreç olarak havuza eklenecek nesne/object Create edilir, istek neticesinde ne
 * Yönetim yükünü arttırır.
 * Asenkron süreçte belirli kontroller yaparak nesnelerin talebi gerçekleştirilir.
 * Ek olarak **Singleton** yaklaşımı uygulanabilir.
+<br>
 
+Örnek;
+
+ThreeD Glasses class'ı;
+```csharp
+class ThreeDGlasses
+{
+    public string Colour { get; set; }
+    public string Size { get; set; }
+    public ThreeDGlasses(string colour, string size)
+    {
+        Colour = colour;
+        Size = size;
+        Console.WriteLine($"{nameof(ThreeDGlasses)} nesnesi üretildi.");
+    }
+    ~ThreeDGlasses()
+    {
+        Console.WriteLine("İmha edildi.");
+    }
+}
+```
+<br>
+Generic ObjectPool class'ı;
+
+```csharp
+class ObjectPool<T> where T : class
+{
+    //POOL
+    readonly ConcurrentBag<T> _instances;
+    public ObjectPool()
+    {
+        //ConcurrentBag initialize
+        _instances = new ConcurrentBag<T>();
+    }
+
+    //GET
+    public T Get(Func<T> _objectGenaretor)
+    {
+        // T type'ında bir instance var mı kontrolü yoksa generator ile üretim.
+        return _instances.TryTake(out T instance) ? instance : _objectGenaretor();
+    }
+    //RETURN
+    public void Return(T instance)
+    {
+        _instances.Add(instance);
+    }
+}
+```
