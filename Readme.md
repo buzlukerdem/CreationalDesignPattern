@@ -473,6 +473,7 @@ class MyClass : IMyClonable
     }
 }
 ```
+<br>
 
 2.Yöntem;
 Concrete class'a, Clone metodunu barındıran IClonable interface'i implement edilir.
@@ -501,5 +502,26 @@ class MyClass : IClonable
   }
 }
 ```
-<br>
+<br><br>
+
+<h3>Object Pool Desing Pattern</h3>
+
+Nesneler belirli senaryolarda yeniden kullanılması gerekiyorsa ve üretimi - imhası maliyet gerektiren yapıya sahipse bu nesneler belirli bir alanda/havuzda tutularak geliştirilir.
+
+Bu strateji Object Pool Design Pattern'dır
+Nesne talep neticesinde kullanıldıktan sonra imha edilmek yerine bir havuza konur ve ihtiyaç doğrultusunda o havuzdan tekrar talep edilir.
+
+Böylece maliyetli nesnelerin üretim süreçleri azaltılmaktadır ve performans arttırılmaktadır.
+
+Havuzdan nesneyi alma eylemi: **GET veya Acquire** ile belirtilir.
+Havuza geri bırakma eylemi: **Return veya Release** ile belirtilir.
+
+Süreç olarak havuza eklenecek nesne/object Create edilir, istek neticesinde nesnenin havuzda olup olmadığı validate edilir, nesne yok edilecekse Destroy edilir yoksa geri havuza Return edilir.
+
+* Bu strateji/yaklaşım yeniden kullanılabilirlik sağlar.
+* Sistem performansını arttırır.
+* Oluşturulacak nesne sayısınına sınır koymayı sağlar.
+* Yönetim yükünü arttırır.
+* Asenkron süreçte belirli kontroller yaparak nesnelerin talebi gerçekleştirilir.
+* Ek olarak **Singleton** yaklaşımı uygulanabilir.
 
